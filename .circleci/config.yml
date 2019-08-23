@@ -2,35 +2,27 @@ version: 2
 jobs:
   build:
     docker:
-      -
-        image: 'circleci/node:lts'
-    working_directory: ~/repo
+      - image: 'circleci/node:lts'
     steps:
       - checkout
-      -
-        restore_cache:
+      - restore_cache:
           keys:
             - 'v1-dependencies-{{ checksum "package.json" }}'
             - v1-dependencies-
-      -
-        run: 'yarn install'
-      -
-        save_cache:
+      - run: 'yarn install'
+      - save_cache:
           paths:
             - node_modules
-          key: 'v1-dependencies-{{ checksum "package.json" }}'
+            key: 'v1-dependencies-{{ checksum "package.json" }}'
   test:
     docker:
-      -
-        image: 'circleci/node:lts'
-      -
-        run: 'npm lint'
+      - image: 'circleci/node:lts'
+      - run: 'npm lint'
 workflows:
   version: 2
   built-test:
     jobs:
       - build
-      -
-        test: null
+      - test:
         requires:
           - build
