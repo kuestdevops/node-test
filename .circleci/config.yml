@@ -21,9 +21,9 @@ jobs:
       - run: 'npm lint'
 workflows:
   version: 2
-  workflow:
+  build-test:
     jobs:
       - build
       - test:
-        requires:
-        - build
+          requires:
+          - build
