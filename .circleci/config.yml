@@ -34,16 +34,13 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
   test:
     docker:
-      # specify the version you desire here
       - image: circleci/node:lts
-
-      # run tests!
       - run: npm lint
-      workflows:
-      version: 2
-      built-test:
-        jobs:
+workflows:
+  version: 2
+  built-test:
+      jobs:
+        - build
+        - test:
+          requires:
           - build
-          - test:
-            requires:
-            - build
